@@ -1,5 +1,5 @@
 - name: Configure webserver with nginx
-  hosts: testserver
+  hosts: webservers
   sudo: True
   tasks:
     - name: install nginx
@@ -16,4 +16,3 @@
 
     - name: restart nginx
       service: name=nginx state=restarted
-      
