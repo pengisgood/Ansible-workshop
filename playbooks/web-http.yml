@@ -1,0 +1,19 @@
+- name: Configure webserver with nginx
+  hosts: testserver
+  sudo: True
+  tasks:
+    - name: install nginx
+      apt: name=nginx update_cache=yes cache_valid_time=3600
+
+    - name: copy nginx config file
+      copy: src=files/nginx.conf dest=/etc/nginx/sites-available/default
+
+    - name: enable nginx configuration
+      file: src=/etc/nginx/sites-available/default dest=/etc/nginx/sites-enabled/default state=link
+
+    - name: copy index.html
+      template: src=templates/index.html.j2 dest=/usr/share/nginx/www/index.html mode=0644
+
+    - name: restart nginx
+      service: name=nginx state=restarted
+      
